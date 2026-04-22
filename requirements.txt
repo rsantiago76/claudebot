@@ -1,62 +1,6 @@
-# ClaudeBot Webhook App
-
-Receives TradingView signals → Claude AI confirms → Places trades on Alpaca & Coinbase
-
-## Setup Instructions
-
-### Step 1 — Upload to GitHub
-1. Go to github.com and create a free account
-2. Create a new repository called "claudebot"
-3. Upload all these files to the repository
-
-### Step 2 — Deploy to Render (free hosting)
-1. Go to render.com and sign up free
-2. Click "New Web Service"
-3. Connect your GitHub repository
-4. Render will detect the render.yaml automatically
-5. Add your environment variables (see below)
-6. Click Deploy — your webhook URL will be:
-   https://claudebot.onrender.com/webhook
-
-### Step 3 — Add Environment Variables in Render
-In your Render dashboard, add these under Environment:
-- ANTHROPIC_API_KEY = (your Claude API key from console.anthropic.com)
-- ALPACA_API_KEY = (from alpaca.markets API page)
-- ALPACA_SECRET_KEY = (from alpaca.markets API page)
-- ALPACA_BASE_URL = https://paper-api.alpaca.markets
-- COINBASE_API_KEY = (from coinbase.com/settings/api)
-- COINBASE_API_SECRET = (from coinbase.com/settings/api)
-- WEBHOOK_SECRET = (make up a random password e.g. mybot2026secret)
-
-### Step 4 — Connect TradingView
-1. Open TradingView and go to your chart with ClaudeBot loaded
-2. Click Alert → Condition → ClaudeBot BUY
-3. In Notifications, check "Webhook URL"
-4. Enter: https://claudebot.onrender.com/webhook
-5. Set Message to:
-   {"action":"buy","symbol":"{{ticker}}","price":"{{close}}","secret":"YOUR_WEBHOOK_SECRET"}
-6. Create the alert
-7. Repeat for ClaudeBot SELL with "action":"sell"
-
-### Step 5 — Test it
-Visit https://claudebot.onrender.com/ — you should see:
-{"status": "ClaudeBot is running"}
-
-To test a trade manually, send this to your webhook URL:
-{"action":"buy","symbol":"AAPL","price":"270","secret":"YOUR_WEBHOOK_SECRET"}
-
-## How it works
-1. ClaudeBot Pine Script fires a BUY/SELL signal on TradingView
-2. TradingView sends a webhook to your Render app
-3. The app asks Claude AI to confirm the trade is sensible
-4. If Claude confirms, the trade is placed automatically
-5. Crypto goes to Coinbase, stocks go to Alpaca
-
-## Safety Rules Built In
-- Max $5 per trade (10% of $50 account)
-- Claude AI second opinion before every trade
-- Paper trading mode on Alpaca (no real money)
-- No withdrawal permissions on API keys
-
-## Check Your Positions
-Visit: https://claudebot.onrender.com/positions
+flask==3.0.0
+anthropic==0.25.0
+alpaca-trade-api==3.3.0
+requests==2.31.0
+gunicorn==21.2.0
+python-dotenv==1.0.0
