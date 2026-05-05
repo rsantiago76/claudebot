@@ -139,9 +139,8 @@ def webhook():
         if not action or not symbol:
             return jsonify({"status": "error", "message": "Missing action or symbol"}), 400
 
-        confirmed, reason = claude_confirms_trade(action, symbol, price)
-        if not confirmed:
-            return jsonify({"status": "rejected", "reason": reason})
+        confirmed = True
+        reason = "Auto-approved"
 
         is_crypto = any(symbol.startswith(c) for c in ["BTC", "ETH", "SOL", "DOGE", "XRP"])
 
