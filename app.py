@@ -25,9 +25,9 @@ COINBASE_API_SECRET = os.environ.get("COINBASE_API_SECRET", "")
 WEBHOOK_SECRET      = os.environ.get("WEBHOOK_SECRET", "claudebot2026")
 
 claude = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-alpaca = TradingClient(ALPACA_API_KEY, ALPACA_SECRET_KEY, paper=True)
+alpaca = TradingClient(ALPACA_API_KEY, ALPACA_SECRET_KEY, paper=False)
 
-MAX_TRADE_USD = 5.0
+MAX_TRADE_USD = 10.0
 
 def claude_confirms_trade(action, symbol, price):
     try:
