@@ -62,7 +62,7 @@ def place_alpaca_trade(action, symbol, price):
             symbol=clean_symbol,
             qty=qty,
             side=side,
-            time_in_force=TimeInForce.GTC
+            time_in_force=TimeInForce.DAY
         )
         order = alpaca.submit_order(order_data)
         return True, f"Alpaca {action.upper()} {qty} {clean_symbol} placed. Order ID: {order.id}"
